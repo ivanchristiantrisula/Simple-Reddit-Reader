@@ -1,0 +1,12 @@
+{
+  "name": "tes-rn",
+  "displayName": "tes-rn",
+  "expo": {
+    "name": "tes-rn",
+    "slug": "tes-rn",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
