@@ -1,35 +1,56 @@
 import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import Post from "../components/post/";
+import Comment from "../components/comment/";
 
 export default function App({ navigation }) {
   const [post, setPost] = useState(navigation.getParam("post"));
-  const [comment, setComment] = useState({});
+  const [comment, setComment] = useState([]);
   useEffect(() => {
     getListing();
   }, [post]);
 
+  useEffect(() => {}, [comment]);
+
   const getListing = () => {
-    let link = post.permalink;
+    let link = `https://www.reddit.com${post.data.permalink}.json`;
     axios
-      .get(`https://www.reddit.com${link}.json`)
+      .get(link)
       .then(function (response) {
-        console.log(response.data[0].data);
-        setComment(response.data[0].data);
+        console.log("Fetched Comment");
+        setComment(response.data[1].data.children);
       })
-      .catch(function (error) {});
+      .catch(function (error) {
+        alert(error);
+      });
   };
 
   return (
     <View style={styles.container}>
-      <Post item={post} navigate={navigation.navigate} noBorder="1" />
+      <Post
+        item={post}
+        navigate={navigation.navigate}
+        noBorder="1"
+        style={styles.post}
+      />
+      {comment.length > 0 ? (
+        <FlatList
+          data={comment}
+          renderItem={({ item }) => <Comment item={item} />}
+        />
+      ) : (
+        <View />
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 300,
+    flex: 1,
+  },
+  post: {
+    marginBottom: 4,
   },
 });
