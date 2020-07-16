@@ -22,13 +22,9 @@ export default function Home({ navigation }) {
         } else {
           temp = temp.concat(response.data.data.children);
           setListing(temp);
-
-          //console.log(temp);
         }
-
         temp = afterIDs;
         temp = temp.push(response.data.data.after);
-        setAfterIDs(temp);
       })
       .catch(function (error) {});
   };
@@ -38,7 +34,7 @@ export default function Home({ navigation }) {
       <FlatList
         data={listing}
         renderItem={({ item }) => (
-          <Listing item={item} navigate={navigation.navigate} />
+          <Listing item={item} navigate={navigation.navigate} noBorder="0" />
         )}
         onEndReached={() => {
           getListing();

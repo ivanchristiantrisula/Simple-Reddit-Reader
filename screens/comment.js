@@ -1,9 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import Post from "../components/post/";
 
 export default function App({ navigation }) {
-  const [post, setPost] = useState(navigation.getParam("post").data);
+  const [post, setPost] = useState(navigation.getParam("post"));
   const [comment, setComment] = useState({});
   useEffect(() => {
     getListing();
@@ -21,8 +22,14 @@ export default function App({ navigation }) {
   };
 
   return (
-    <View>
-      <Text>{}</Text>
+    <View style={styles.container}>
+      <Post item={post} navigate={navigation.navigate} noBorder="1" />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    height: 300,
+  },
+});

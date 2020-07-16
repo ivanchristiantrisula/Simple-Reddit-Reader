@@ -11,7 +11,6 @@ import {
   FlatList,
   TouchableHighlight,
 } from "react-native";
-import Navigator from "../../routes/stack";
 
 const Listing = (props) => {
   const renderMedia = (media) => {
@@ -30,7 +29,14 @@ const Listing = (props) => {
         handlePostClick(props.item);
       }}
     >
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          props.noBorder == 1
+            ? { borderColor: "white" }
+            : { borderColor: "black" },
+        ]}
+      >
         {renderMedia(props.item.data.url)}
 
         <Text style={styles.title}>{props.item.data.title}</Text>
@@ -75,6 +81,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     padding: 6,
     color: "black",
+    height: "auto",
   },
   selfText: {
     fontSize: 12,
