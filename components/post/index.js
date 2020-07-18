@@ -21,7 +21,9 @@ const Listing = (props) => {
     }
   };
   const handlePostClick = (post) => {
-    props.navigate("Comment", { post: post });
+    if (props.navigate != null) {
+      props.navigate("Comment", { post: post });
+    }
   };
   return (
     <TouchableHighlight

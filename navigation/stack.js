@@ -13,4 +13,4 @@ const Screens = {
 };
 
 const stack = createStackNavigator(Screens);
-export default createAppContainer(stack);
+export default stack;

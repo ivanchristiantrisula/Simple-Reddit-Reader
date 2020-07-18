@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import Post from "../components/post/";
 import Comment from "../components/comment/";
 
-export default function App({ navigation }) {
-  const [post, setPost] = useState(navigation.getParam("post"));
+export default function App(props) {
+  const [post, setPost] = useState(props.route.params.post);
   const [comment, setComment] = useState([]);
   useEffect(() => {
     getListing();
@@ -28,12 +28,7 @@ export default function App({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Post
-        item={post}
-        navigate={navigation.navigate}
-        noBorder="1"
-        style={styles.post}
-      />
+      <Post item={post} noBorder="1" style={styles.post} />
       {comment.length > 0 ? (
         <FlatList
           data={comment}
