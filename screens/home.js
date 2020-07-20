@@ -3,7 +3,7 @@ import { View, FlatList } from "react-native";
 import axios from "axios";
 import Listing from "../components/post/index";
 
-export default function Home({ navigation }) {
+export default function Home(props) {
   const [listing, setListing] = useState([]);
   const [afterIDs, setAfterIDs] = useState([""]);
 
@@ -12,8 +12,13 @@ export default function Home({ navigation }) {
   }, []);
 
   const getListing = () => {
+    let sub = "/";
+    console.log(props);
+    if (typeof props.route.params != "undefined") {
+      sub = props.route.params.sub;
+    }
     axios
-      .get(`https://www.reddit.com/.json?after=${afterIDs.slice(-1)[0]}`)
+      .get(`https://www.reddit.com${sub}.json?after=${afterIDs.slice(-1)[0]}`)
       .then(function (response) {
         console.log("fetched listing");
         let temp = listing;
@@ -34,7 +39,11 @@ export default function Home({ navigation }) {
       <FlatList
         data={listing}
         renderItem={({ item }) => (
-          <Listing item={item} navigate={navigation.navigate} noBorder="0" />
+          <Listing
+            item={item}
+            navigate={props.navigation.navigate}
+            noBorder="0"
+          />
         )}
         onEndReached={() => {
           getListing();

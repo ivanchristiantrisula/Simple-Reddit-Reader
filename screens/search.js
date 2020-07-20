@@ -4,7 +4,7 @@ import Search from "../components/search/index";
 import Axios from "axios";
 import { search } from "../utils/liveSearch";
 
-export default App = (props) => {
+export default App = ({ navigation }) => {
   const [subs, setSubs] = useState([]);
   const [searchText, setSearchText] = useState("");
 
@@ -39,7 +39,12 @@ export default App = (props) => {
           setSearchText(text);
         }}
       />
-      <FlatList data={subs} renderItem={({ item }) => <Search item={item} />} />
+      <FlatList
+        data={subs}
+        renderItem={({ item }) => (
+          <Search item={item} navigate={navigation.navigate} />
+        )}
+      />
     </View>
   );
 };
