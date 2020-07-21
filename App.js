@@ -5,13 +5,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./screens/home";
 import CommentScreen from "./screens/comment";
 import SearchScreen from "./screens/search";
+import FullsizeMediaScreen from "./screens/fullsizeMedia";
+import { Ionicons } from "@expo/vector-icons";
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Feed" component={HomeScreen} />
       <HomeStack.Screen name="Comment" component={CommentScreen} />
+      <HomeStack.Screen name="Media" component={FullsizeMediaScreen} />
     </HomeStack.Navigator>
   );
 };
@@ -20,7 +23,7 @@ const SearchStackScreen = () => {
   return (
     <SearchStack.Navigator>
       <SearchStack.Screen name="Search" component={SearchScreen} />
-      <SearchStack.Screen name="Home" component={HomeScreen} />
+      <SearchStack.Screen name="Feed" component={HomeScreen} />
     </SearchStack.Navigator>
   );
 };
@@ -30,8 +33,25 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === "Feed") {
+              iconName = focused ? "ios-list-box" : "ios-list";
+            } else if (route.name === "Search") {
+              iconName = focused ? "ios-search" : "ios-search";
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "black",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen name="Feed" component={HomeStackScreen} />
         <Tab.Screen name="Search" component={SearchStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>

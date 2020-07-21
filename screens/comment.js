@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import Post from "../components/post/";
 import Comment from "../components/comment/";
 
@@ -27,7 +27,7 @@ export default function App(props) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Post item={post} noBorder="1" style={styles.post} />
       {comment.length > 0 ? (
         <FlatList
@@ -37,7 +37,7 @@ export default function App(props) {
       ) : (
         <View />
       )}
-    </View>
+    </ScrollView>
   );
 }
 

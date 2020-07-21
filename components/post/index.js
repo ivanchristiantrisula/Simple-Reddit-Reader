@@ -10,13 +10,23 @@ import {
   Image,
   FlatList,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
+import FullsizeMedia from "../../screens/fullsizeMedia";
 
 const Listing = (props) => {
   const renderMedia = (media) => {
     if (media.substr(-4).substr(0, 1) == ".") {
       return (
-        <FastImage source={{ uri: media }} style={styles.imageThumbnail} />
+        <TouchableOpacity
+          onPress={() => {
+            if (props.navigate != null) {
+              props.navigate("Media", { url: media });
+            }
+          }}
+        >
+          <FastImage source={{ uri: media }} style={styles.imageThumbnail} />
+        </TouchableOpacity>
       );
     }
   };

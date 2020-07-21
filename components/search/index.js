@@ -8,7 +8,7 @@ export default App = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        props.navigate("Home", { sub: props.item.data.url });
+        props.navigate("Feed", { sub: props.item.data.url });
       }}
     >
       <View style={styles.container}>

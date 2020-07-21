@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "lightgrey",
   },
   author: {
-    color: "blue",
+    color: "#6A93CB",
     marginBottom: 2,
   },
 });
