@@ -51,7 +51,14 @@ const Listing = (props) => {
       >
         {renderMedia(props.item.data.url)}
 
-        <Text style={styles.title}>{props.item.data.title}</Text>
+        <Text
+          style={[
+            styles.title,
+            props.item.data.stickied ? { color: "green" } : { color: "black" },
+          ]}
+        >
+          {props.item.data.title}
+        </Text>
 
         {props.item.data.selftext != "" ? (
           <Text numberOfLines={3} style={styles.selfText}>
@@ -63,8 +70,20 @@ const Listing = (props) => {
 
         <View>
           <Text style={styles.subName}>
-            Posted on {props.item.data.subreddit_name_prefixed} by /u/
+            {props.item.data.subreddit_name_prefixed} • /u/
             {props.item.data.author}
+          </Text>
+        </View>
+        <View style={styles.score}>
+          <Text
+            style={{
+              borderWidth: 1,
+              borderRadius: 20,
+              paddingLeft: 10,
+              paddingRight: 10,
+            }}
+          >
+            ∧ {props.item.data.score} V
           </Text>
         </View>
       </View>
@@ -86,11 +105,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: "#20232a",
-    borderRadius: 6,
+    borderRadius: 10,
     marginHorizontal: 4,
     marginTop: 2,
     marginBottom: 6,
-    padding: 6,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
     color: "black",
     height: "auto",
   },
@@ -100,6 +122,12 @@ const styles = StyleSheet.create({
 
   subName: {
     marginTop: 6,
+    marginBottom: 8,
+  },
+
+  score: {
+    flex: 1,
+    flexWrap: "wrap",
   },
 });
 
