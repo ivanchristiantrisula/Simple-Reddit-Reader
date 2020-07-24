@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Component, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,6 +7,8 @@ import CommentScreen from "./screens/comment";
 import SearchScreen from "./screens/search";
 import FullsizeMediaScreen from "./screens/fullsizeMedia";
 import { Ionicons } from "@expo/vector-icons";
+import base64 from "react-native-base64";
+import authorize from "react-native-app-auth";
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {
@@ -30,7 +32,32 @@ const SearchStackScreen = () => {
 
 const Tab = createBottomTabNavigator();
 
+const config = {
+  redirectUrl: "com.testrn://oauth2redirect/reddit",
+  clientId: "OcHJxuhDu06nCQ",
+  clientSecret: "", // empty string - needed for iOS
+  scopes: ["identity"],
+  serviceConfiguration: {
+    authorizationEndpoint: "https://www.reddit.com/api/v1/authorize.compact",
+    tokenEndpoint: "https://www.reddit.com/api/v1/access_token",
+  },
+  customHeaders: {
+    token: {
+      Authorization: "Basic " + base64.encode("OcHJxuhDu06nCQ"),
+    },
+  },
+};
+
 export default function App() {
+  useEffect(() => {
+    runAuth();
+  }, []);
+
+  const runAuth = async () => {
+    const authState = await authorize(config);
+    alert();
+    console.log(authState);
+  };
   return (
     <NavigationContainer>
       <Tab.Navigator
