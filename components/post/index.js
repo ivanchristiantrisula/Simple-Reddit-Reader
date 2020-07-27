@@ -70,21 +70,40 @@ const Listing = (props) => {
 
         <View>
           <Text style={styles.subName}>
-            {props.item.data.subreddit_name_prefixed} • /u/
-            {props.item.data.author}
+            {props.item.data.subreddit_name_prefixed} • {props.item.data.author}
           </Text>
         </View>
-        <View style={styles.score}>
-          <Text
-            style={{
-              borderWidth: 1,
-              borderRadius: 20,
-              paddingLeft: 10,
-              paddingRight: 10,
-            }}
-          >
-            ∧ {props.item.data.score} V
-          </Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            width: "50%",
+          }}
+        >
+          <View style={styles.score}>
+            <Text
+              style={{
+                borderWidth: 1,
+                borderRadius: 20,
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+            >
+              ∧ {props.item.data.score} V
+            </Text>
+          </View>
+          <View style={styles.score}>
+            <Text
+              style={{
+                borderWidth: 1,
+                borderRadius: 20,
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+            >
+              {props.item.data.num_comments}
+            </Text>
+          </View>
         </View>
       </View>
     </TouchableHighlight>

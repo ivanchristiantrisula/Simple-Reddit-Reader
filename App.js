@@ -30,22 +30,6 @@ const SearchStackScreen = () => {
 
 const Tab = createBottomTabNavigator();
 
-const config = {
-  redirectUrl: "com.testrn://oauth2redirect/reddit",
-  clientId: "OcHJxuhDu06nCQ",
-  clientSecret: "", // empty string - needed for iOS
-  scopes: ["identity"],
-  serviceConfiguration: {
-    authorizationEndpoint: "https://www.reddit.com/api/v1/authorize.compact",
-    tokenEndpoint: "https://www.reddit.com/api/v1/access_token",
-  },
-  customHeaders: {
-    token: {
-      Authorization: "Basic " + base64.encode("OcHJxuhDu06nCQ"),
-    },
-  },
-};
-
 export default function App() {
   return (
     <NavigationContainer>
@@ -71,5 +55,11 @@ export default function App() {
         <Tab.Screen name="Search" component={SearchStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
+    //   <WebView
+    //   source={{
+    //     uri:
+    //       "https://www.reddit.com/api/v1/authorize?client_id=OcHJxuhDu06nCQ&response_type=code&state=tes&redirect_uri=com.testrn://oauth2redirect/reddit&duration=permanent&scope=identity",
+    //   }}
+    // />
   );
 }
