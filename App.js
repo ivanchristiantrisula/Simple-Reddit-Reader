@@ -7,9 +7,6 @@ import CommentScreen from "./screens/comment";
 import SearchScreen from "./screens/search";
 import FullsizeMediaScreen from "./screens/fullsizeMedia";
 import { Ionicons } from "@expo/vector-icons";
-import base64 from "react-native-base64";
-import authorize from "react-native-app-auth";
-import { WebView } from "react-native-webview";
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {
@@ -50,44 +47,29 @@ const config = {
 };
 
 export default function App() {
-  useEffect(() => {
-    runAuth();
-  }, []);
-
-  const runAuth = async () => {
-    const authState = await authorize(config);
-    alert();
-    console.log(authState);
-  };
   return (
-    // <NavigationContainer>
-    //   <Tab.Navigator
-    //     screenOptions={({ route }) => ({
-    //       tabBarIcon: ({ focused, color, size }) => {
-    //         let iconName;
-    //         if (route.name === "Feed") {
-    //           iconName = focused ? "ios-list-box" : "ios-list";
-    //         } else if (route.name === "Search") {
-    //           iconName = focused ? "ios-search" : "ios-search";
-    //         }
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === "Feed") {
+              iconName = focused ? "ios-list-box" : "ios-list";
+            } else if (route.name === "Search") {
+              iconName = focused ? "ios-search" : "ios-search";
+            }
 
-    //         return <Ionicons name={iconName} size={size} color={color} />;
-    //       },
-    //     })}
-    //     tabBarOptions={{
-    //       activeTintColor: "black",
-    //       inactiveTintColor: "gray",
-    //     }}
-    //   >
-    //     <Tab.Screen name="Feed" component={HomeStackScreen} />
-    //     <Tab.Screen name="Search" component={SearchStackScreen} />
-    //   </Tab.Navigator>
-    // </NavigationContainer>
-    <WebView
-      source={{
-        uri:
-          "https://www.reddit.com/api/v1/authorize?client_id=OcHJxuhDu06nCQ&response_type=code&state=tes&redirect_uri=com.testrn://oauth2redirect/reddit&duration=permanent&scope=identity",
-      }}
-    />
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "black",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen name="Feed" component={HomeStackScreen} />
+        <Tab.Screen name="Search" component={SearchStackScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
