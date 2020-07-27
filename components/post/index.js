@@ -35,20 +35,50 @@ const Listing = (props) => {
       props.navigate("Comment", { post: post });
     }
   };
+
+  const calcuateTimeDiff = (postTime) => {
+    const currTime = Math.round(new Date().getTime() / 1000);
+    var d = Math.abs(currTime - postTime); // delta
+    var r = {}; // result
+    var s = {
+      // structure
+      year: 31536000,
+      month: 2592000,
+      week: 604800, // uncomment row to ignore
+      day: 86400, // feel free to add your own row
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    };
+
+    Object.keys(s).forEach(function (key) {
+      r[key] = Math.floor(d / s[key]);
+      d -= r[key] * s[key];
+    });
+
+    if (r["year"] > 0) {
+      return r["year"] + "y";
+    } else if (r["month"] > 0) {
+      return r["month"] + "mo";
+    } else if (r["week"] > 0) {
+      return r["week"] + "w";
+    } else if (r["day"] > 0) {
+      return r["day"] + "d";
+    } else if (r["hour"] > 0) {
+      return r["hour"] + "h";
+    } else if (r["minute"] > 0) {
+      return r["minute"] + "m";
+    } else if (r["second"] > 0) {
+      return r["second"] + "s";
+    }
+  };
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={() => {
         handlePostClick(props.item);
       }}
     >
-      <View
-        style={[
-          styles.container,
-          props.noBorder == 1
-            ? { borderColor: "white" }
-            : { borderColor: "black" },
-        ]}
-      >
+      <View style={[styles.container]}>
         {renderMedia(props.item.data.url)}
 
         <Text
@@ -70,7 +100,8 @@ const Listing = (props) => {
 
         <View>
           <Text style={styles.subName}>
-            {props.item.data.subreddit_name_prefixed} • {props.item.data.author}
+            {props.item.data.subreddit_name_prefixed} • {props.item.data.author}{" "}
+            • {calcuateTimeDiff(props.item.data.created)}
           </Text>
         </View>
         <View
@@ -106,7 +137,7 @@ const Listing = (props) => {
           </View>
         </View>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
@@ -121,9 +152,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     borderWidth: 1,
-    borderColor: "#20232a",
+    borderColor: "white",
     borderRadius: 10,
     marginHorizontal: 4,
     marginTop: 2,
